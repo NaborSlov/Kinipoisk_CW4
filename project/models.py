@@ -1,3 +1,5 @@
+from enum import unique
+
 from sqlalchemy import Column, String, TEXT, INT, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -29,3 +31,13 @@ class Movie(models.Base):
 
     genre = relationship("Genre", foreign_keys=genre_id)
     director = relationship("Director", foreign_keys=director_id)
+
+
+class User(models.Base):
+    __tablename__ = "users"
+
+    email = Column(String(100), unique=True, nullable=False)
+    password = Column(String(100), unique=True, nullable=False)
+    name = Column(String(20))
+    surname = Column(String(20))
+    favorite_genre = Column(String(20))

@@ -1,5 +1,4 @@
 import base64
-import os
 from pathlib import Path
 from typing import Type
 import configparser
@@ -26,7 +25,7 @@ class BaseConfig:
     PWD_HASH_ITERATIONS = 100_000
 
     RESTX_JSON = {
-        'ensure_ascii': False,
+        'ensure_ascii': False
     }
 
 

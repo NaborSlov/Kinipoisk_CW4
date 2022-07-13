@@ -14,5 +14,5 @@ class DirectorsService:
             return director
         raise ItemNotFound(f'Director with pk={pk} not exists.')
 
-    def get_all(self, page: Optional[int] = None) -> list[Director]:
+    def get_all(self, page: Optional[int] = None, status=None) -> list[Director]:
         return self.dao.get_all(page=page)

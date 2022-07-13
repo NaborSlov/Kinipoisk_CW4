@@ -22,7 +22,7 @@ class BaseDAO(Generic[T]):
     def get_by_id(self, pk: int) -> Optional[T]:
         return self._db_session.query(self.__model__).get(pk)
 
-    def get_all(self, page: Optional[int] = None) -> List[T]:
+    def get_all(self, page: Optional[int] = None, status: Optional[int] = None) -> List[T]:
         stmt: BaseQuery = self._db_session.query(self.__model__)
         if page:
             try:

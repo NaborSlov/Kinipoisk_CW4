@@ -1,9 +1,12 @@
-from flask_restx import Api
+from .models import movie, director, genre, user
+from .parsers import parser, parser_user
+from .api import api
 
-api = Api(
-    authorizations={
-        "Bearer": {"type": "apiKey", "in": "header", "name": "Authorization"}
-    },
-    title="Flask Course Project 3",
-    doc="/docs",
-)
+
+__all__ = ['api',
+           "movie",
+           'director',
+           'genre',
+           'parser',
+           'user',
+           'parser_user']

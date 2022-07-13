@@ -14,5 +14,5 @@ class MoviesService:
             return director
         raise ItemNotFound(f'Director with pk={pk} not exists.')
 
-    def get_all(self, page: Optional[int] = None) -> list[Movie]:
-        return self.dao.get_all(page=page)
+    def get_all(self, page: Optional[int] = None, status: Optional[str] = None) -> list[Movie]:
+        return self.dao.get_all(page=page, status=status)
