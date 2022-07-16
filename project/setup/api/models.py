@@ -1,7 +1,4 @@
-from tkinter.scrolledtext import example
-
 from flask_restx import fields, Model
-from jsonschema._validators import required
 
 from project.setup.api.api import api
 
@@ -22,15 +19,14 @@ movie: Model = api.model('Фильм', {
     'year': fields.Integer(required=True, max_length=5, example=2020),
     'rating': fields.Float(required=True, max_length=5, example=5.5),
     'genre': fields.Nested(genre),
-    'director': fields.Nested(director)
+    'director': fields.Nested(director),
 })
 
 user: Model = api.model('Пользователь', {
     'id': fields.Integer(required=True, example=1),
     'email': fields.String(required=True, example='name@email.com'),
-    'password': fields.String(required=True),
     'name': fields.String(example='Валера'),
     'surname': fields.String(example='Валериевич'),
-    'favorite_genre': fields.String(example='боевик'),
+    'favorite_genre': fields.Nested(genre),
 })
 

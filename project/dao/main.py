@@ -6,7 +6,7 @@ from werkzeug.exceptions import NotFound
 
 from project.dao.base import BaseDAO
 from project.exceptions import ItemNotFound
-from project.models import Genre, Director, Movie, User
+from project.models import Genre, Director, Movie, User, movie_favorites
 
 
 class GenresDAO(BaseDAO[Genre]):
@@ -37,15 +37,15 @@ class MovieDAO(BaseDAO[Movie]):
 class UserDAO(BaseDAO[User]):
     __model__ = User
 
-    def __init__(self, db_session):
+    def __init__(self, db_session) -> None:
         super().__init__(db_session)
 
-    def add_user(self, data_user: dict):
+    def add_user(self, data_user: dict) -> None:
         user = User(**data_user)
         self._db_session.add(user)
         self._db_session.commit()
 
-    def get_by_email(self, email):
+    def get_by_email(self, email: str) -> User:
         stmt: BaseQuery = self._db_session.query(self.__model__).filter(self.__model__.email == email)
 
         if user := stmt.first():
@@ -53,3 +53,6 @@ class UserDAO(BaseDAO[User]):
         else:
             raise ItemNotFound("Нет пользователя с таким email")
 
+    def update(self, user: User) -> None:
+        self._db_session.add(user)
+        self._db_session.commit()

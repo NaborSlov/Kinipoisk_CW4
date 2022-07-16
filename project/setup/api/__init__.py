@@ -1,5 +1,5 @@
 from .models import movie, director, genre, user
-from .parsers import parser, parser_user
+from .parsers import parser, pr_user, pr_passwords, pr_profile
 from .api import api
 
 
@@ -9,4 +9,6 @@ __all__ = ['api',
            'genre',
            'parser',
            'user',
-           'parser_user']
+           'pr_user',
+           'pr_passwords',
+           'pr_profile']

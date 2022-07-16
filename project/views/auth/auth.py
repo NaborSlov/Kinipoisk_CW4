@@ -1,24 +1,24 @@
+from flask import request
 from flask_restx import Namespace, Resource
-from project.setup.api import parser_user
+from project.setup.api import pr_user
 from project.container import user_service
 
-api = Namespace('auth')
+api = Namespace('')
 
 
-@api.route('/register/')
+@api.route('/auth/register/')
 class RegisterView(Resource):
-    @api.expect(parser_user)
+    @api.expect(pr_user)
     def post(self):
-        user_service.add_user(parser_user.parse_args())
+        user_service.add_user(pr_user.parse_args())
 
 
-@api.route('/login/')
+@api.route('/auth/login/')
 class AuthsView(Resource):
-    @api.expect(parser_user)
+    @api.expect(pr_user)
     def post(self):
-        if user_service.user_password_hash(parser_user.parse_args()):
-            return 200
-        else:
-            return 404, 'Неправильный логин или пароль'
+        return user_service.user_password_verification(pr_user.parse_args())
 
-
+    def put(self):
+        refresh_token = request.cookies.get('RefreshToken')
+        return user_service.generate_new_token(refresh_token)
