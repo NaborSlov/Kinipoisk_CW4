@@ -6,13 +6,21 @@ from project.models import Director
 
 
 class DirectorsService:
-    def __init__(self, dao: BaseDAO):
+    def __init__(self, dao: BaseDAO) -> None:
         self.dao = dao
 
     def get_item(self, pk: int) -> Director:
+        """
+        Получение режиссера по его id
+
+        :param pk: id режиссера
+        """
         if director := self.dao.get_by_id(pk):
             return director
         raise ItemNotFound(f'Director with pk={pk} not exists.')
 
-    def get_all(self, page: Optional[int] = None, status=None) -> list[Director]:
+    def get_all(self, page: Optional[int] = None) -> list[Director]:
+        """
+        Получение всех режиссеров
+        """
         return self.dao.get_all(page=page)

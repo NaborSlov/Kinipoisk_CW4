@@ -26,5 +26,6 @@ def db(app):
 
 @pytest.fixture
 def client(app, db):
-    with app.test_client() as client:
+    with app.test_client(use_cookies=True) as client:
         yield client
+

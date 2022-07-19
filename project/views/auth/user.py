@@ -9,24 +9,38 @@ api = Namespace('user')
 
 @api.route('/')
 class UsersView(Resource):
+    @api.response(404, "Нет пользователя с таким email")
     @api.marshal_with(user, as_list=True, code=200, description='OK')
     @authorizations
-    def get(self, user_id):
-        return user_service.get_item(user_id)
+    def get(self, email):
+        """
+        Получение пользователя по email
 
+        :param email: email получаем в декораторе authorizations
+        """
+        return user_service.get_by_email(email=email)
+
+    @api.response(500, 'Нет данных для изменения профиля')
     @api.expect(pr_profile)
     @authorizations
-    def patch(self, user_id):
-        user_service.profile_update(user_id, pr_profile.parse_args())
-        return 200
+    def patch(self, email):
+        """
+        Изменение данных в профиле пользователя
+
+        :param email: email получаем в декораторе authorizations
+        """
+        user_service.profile_update(email, pr_profile.parse_args())
 
 
 @api.route('/password/')
 class UserPasswordView(Resource):
+    @api.response(500, 'Не введен новый или старый пароль')
     @api.expect(pr_passwords)
     @authorizations
-    def put(self, user_id):
-        user_service.password_update(user_id, pr_passwords.parse_args())
-        return 200
+    def put(self, email):
+        """
+        Изменение пароля пользователя
 
-
+        :param email: email получаем в декораторе authorizations
+        """
+        user_service.password_update(email, pr_passwords.parse_args())

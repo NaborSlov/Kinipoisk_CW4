@@ -6,5 +6,6 @@ from .users_movies import api as user_favorite_ns
 __all__ = [
     'genres_ns',
     'director_ns',
-    'movie_ns'
+    'movie_ns',
+    'user_favorite_ns'
 ]

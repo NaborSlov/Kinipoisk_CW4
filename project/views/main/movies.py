@@ -1,20 +1,20 @@
 from flask_restx import Namespace, Resource
 
 from project.container import movie_service
-from project.setup.api import parser, movie
+from project.setup.api import pr_movie, movie
 
 api = Namespace('movies')
 
 
 @api.route('/')
 class MoviesView(Resource):
-    @api.expect(parser)
+    @api.expect(pr_movie)
     @api.marshal_with(movie, as_list=True, code=200, description='OK')
     def get(self):
         """
         Get all moves
         """
-        return movie_service.get_all(**parser.parse_args())
+        return movie_service.get_all(**pr_movie.parse_args())
 
 
 @api.route('/<int:movie_id>/')

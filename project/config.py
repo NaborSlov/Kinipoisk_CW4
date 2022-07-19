@@ -42,7 +42,8 @@ class DevelopmentConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
-    # TODO: дополнить конфиг
+    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + BASE_DIR.joinpath('project.db').as_posix()
 
 
 class ConfigFactory:

@@ -1,10 +1,12 @@
 from flask import request, abort
 
-from project.tools.security import decode_token, compose_passwords
-from project.container import user_service
+from project.tools.security import decode_token
 
 
 def authorizations(func):
+    """
+    Декоратор для проверки токена и передачи email в декорируемую функцию
+    """
     def wrapper(*args, **kwargs):
         access_token = request.cookies.get('AccessToken')
 
@@ -13,11 +15,6 @@ def authorizations(func):
 
         data = decode_token(access_token)
 
-        user = user_service.get_by_email(data['email'])
-
-        if not compose_passwords(data['password'], user.password):
-            abort(401)
-
-        return func(*args, **kwargs, user_id=user.id)
+        return func(*args, **kwargs, email=data['email'])
 
     return wrapper
